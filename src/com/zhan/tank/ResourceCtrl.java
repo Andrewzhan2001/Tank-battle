@@ -11,7 +11,7 @@ public class ResourceCtrl {
     public static BufferedImage bulletL, bulletU, bulletR, bulletD;
     public static BufferedImage[] explodes = new BufferedImage[16];
     static {// ReourceCtrl class 文件被load到内存的时候自动执行
-        try {
+        try {// class loader 负责把.class文件加载到jvm中
             tankU = ImageIO.read(ResourceCtrl.class.getClassLoader().getResourceAsStream("images/GoodTank2.png"));
             tankL = ImageUtil.rotateImage(tankU, -90);
             tankR = ImageUtil.rotateImage(tankU, 90);
