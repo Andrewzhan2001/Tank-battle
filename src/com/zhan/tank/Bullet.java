@@ -30,6 +30,7 @@ public class Bullet {
         this.dir = dir;
         this.group = group;
         this.tf = tf;
+        tf.bullets.add(this);
     }
     private Rectangle rect = new Rectangle(this.x, this.y, image.getWidth(),image.getHeight());
     private void move() {

@@ -3,6 +3,7 @@ package com.zhan.tank;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Random;
 
 
@@ -39,14 +40,22 @@ public class Tank {
     private Random random = new Random();
     private Group group = Group.Enemy;
     private BufferedImage image= ResourceCtrl.tankU;
+
+    FireStrategy fs = new FourDirFireStrategy();
     public BufferedImage getImage() {
         return image;
     }
     public void setImage(BufferedImage image) {
         this.image = image;
     }
-    private BufferedImage bimage = ResourceCtrl.bulletU;
+    BufferedImage bimage = ResourceCtrl.bulletU;
     private TankFrame tf;
+    public TankFrame getTf() {
+        return tf;
+    }
+    public void setTf(TankFrame tf) {
+        this.tf = tf;
+    }
     public Dir getDir() {
         return dir;
     }
@@ -66,6 +75,22 @@ public class Tank {
         this.dir = dir;
         this.setGroup(group);
         this.tf = tf;
+        if (group == Group.my){
+            String goodFSName = PropertyMgr.getString("goodFS");
+            try {//全路径名，把string名字的文件load到内存
+                fs = (FireStrategy)Class.forName(goodFSName).getDeclaredConstructor().newInstance();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {//getconstructor拿到一个不带参数的构造方法，用构造方法创建对象
+            String badFSName = PropertyMgr.getString("badFS");
+            try {
+                fs = (FireStrategy)Class.forName(badFSName).getDeclaredConstructor().newInstance();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } 
+        
     }
     private void move() {
         if (!moving) return;
@@ -132,10 +157,7 @@ public class Tank {
         return 0;
     }
     public void fire() {
-        int bulletx = this.x + this.image.getWidth()/2 - bimage.getWidth()/2;
-        int bullety = this.y + this.image.getHeight()/2 - bimage.getHeight()/2;
-        tf.bullets.add(new Bullet(bulletx, bullety, this.dir, this.group, this.tf));
-        if (this.group == Group.my) new Thread(()->new Audio("audio/tank_fire.wav").play()).start();
+        fs.fire(this);
     }
     public void die() {
         this.alive = false;

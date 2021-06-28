@@ -8,3 +8,7 @@ bspeed=10
 #screen width and height
 scwidth=1080
 scheight=960
+
+#fireStrategy
+goodFS=com.zhan.tank.FourDirFireStrategy
+badFS=com.zhan.tank.DefaultFireStrategy
