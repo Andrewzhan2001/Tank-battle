@@ -1,0 +1,10 @@
+#tanks count at initialization
+initTankCount=10
+
+#tank and bullet speed
+tspeed=5
+bspeed=10
+
+#screen width and height
+scwidth=1080
+scheight=960
