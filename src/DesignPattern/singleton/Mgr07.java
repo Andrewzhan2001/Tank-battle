@@ -2,7 +2,8 @@ package DesignPattern.singleton;
 
 //有多线程的风险，还没有执行到new的时候另外一个线程开始检测就会出现多个instance
 public enum Mgr07 {
-  Instance;//enum里面每一个都是mgr07的static final只有在用到的时候才会定义（默认构造函数）
+  Instance;//static不能阻止重新赋值修改指向(继承子类重新定义，static和构造里面修改)
+  //enum没有构造函数没法new，没法继承
   public void m() { System.out.println("m");} 
   public static void main(String[] args) {
     for (int i = 0; i < 100; i++) {
