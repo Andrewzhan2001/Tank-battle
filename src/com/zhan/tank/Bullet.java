@@ -4,7 +4,10 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
-public class Bullet {
+import com.zhan.tank.abstractfactory.BaseBullet;
+import com.zhan.tank.abstractfactory.BaseTank;
+
+public class Bullet extends BaseBullet{
     private static final int speed = PropertyMgr.getInt("bspeed");
     private int x,y;
     private Dir dir;
@@ -57,14 +60,15 @@ public class Bullet {
         rect.width = image.getWidth();
         rect.height = image.getHeight();
     }
-    public void collideWith(Tank tank) {
+    @Override
+    public void collideWith(BaseTank tank) {
         if (this.group == tank.getGroup()) return;
         if (rect.intersects(tank.getrect())) {
             tank.die();
             this.die();
             int ex = tank.getX() + tank.getImage().getWidth()/2 - Explode.width/2;
             int ey = tank.getY() + tank.getImage().getHeight()/2 - Explode.height/2;
-            tf.explodes.add(new Explode(ex,ey,tf));
+            tf.explodes.add(tf.gf.createExplode(ex, ey, tf));
         }
     }
     private void die() {

@@ -12,13 +12,21 @@ import java.util.ArrayList;
 //import java.util.Iterator;
 import java.util.List;
 
+import com.zhan.tank.abstractfactory.BaseBullet;
+import com.zhan.tank.abstractfactory.BaseExplode;
+import com.zhan.tank.abstractfactory.BaseTank;
+import com.zhan.tank.abstractfactory.DefaultFactory;
+import com.zhan.tank.abstractfactory.GameFactory;
+import com.zhan.tank.abstractfactory.RectFactory;
+
 
 public class TankFrame extends Frame {
-    static final int sc_width = PropertyMgr.getInt("scwidth"), sc_height = PropertyMgr.getInt("scheight");
+    public static final int sc_width = PropertyMgr.getInt("scwidth"), sc_height = PropertyMgr.getInt("scheight");
     Tank mytank = new Tank(200, 200, Dir.up, Group.my, this);
-    List<Bullet> bullets = new ArrayList<>();//容器里面不清掉就有内存泄漏
-    List<Tank> enemys = new ArrayList<>();
-    List<Explode> explodes = new ArrayList<>();
+    public List<BaseBullet> bullets = new ArrayList<>();//容器里面不清掉就有内存泄漏
+    public List<BaseTank> enemys = new ArrayList<>();
+    public List<BaseExplode> explodes = new ArrayList<>();
+    public GameFactory gf = new RectFactory();
     public TankFrame() {
         setSize(sc_width, sc_height);
         setResizable(false);

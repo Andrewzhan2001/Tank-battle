@@ -3,11 +3,12 @@ package com.zhan.tank;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-import java.lang.reflect.InvocationTargetException;
 import java.util.Random;
 
+import com.zhan.tank.abstractfactory.BaseTank;
 
-public class Tank {
+
+public class Tank extends BaseTank{
     private int x, y;
     public int getX() {
         return x;
