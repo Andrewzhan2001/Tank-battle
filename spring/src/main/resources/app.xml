@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- bean definitions here -->
+  <bean id="d" class="com.zhan.Driver"></bean>
+  <bean id="tank" class="com.zhan.Driver">
+    <!--之后修改strategy-->
+    <property name="driver" ref="d"></property><!--将tank里面找到driver的属性将他设成d的引用（就是driver对象）-->
+  </bean>
+</beans>
