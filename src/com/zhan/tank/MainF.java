@@ -6,9 +6,9 @@ public class MainF {
         
         int initTankCount = PropertyMgr.getInt("initTankCount");
         //初始化敌方坦克
-        for (int i = 0; i < initTankCount; i++) {
-            tf.enemys.add(new Tank(50+i*80, 200, Dir.down,Group.Enemy,tf));
-        }
+        for(int i=0; i<initTankCount; i++) {
+			tf.enemys.add(tf.gf.createTank(50 + i*80, 200, Dir.down, Group.Enemy, tf));
+		}
 
         new Thread(()->new Audio("audio/war1.wav").loop()).start();
 

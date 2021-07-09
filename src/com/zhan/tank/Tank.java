@@ -42,7 +42,7 @@ public class Tank extends BaseTank{
     private Group group = Group.Enemy;
     private BufferedImage image= ResourceCtrl.tankU;
 
-    FireStrategy fs = new FourDirFireStrategy();
+    FireStrategy fs;
     public BufferedImage getImage() {
         return image;
     }
@@ -158,7 +158,15 @@ public class Tank extends BaseTank{
         return 0;
     }
     public void fire() {
-        fs.fire(this);
+        int bX = this.x + image.getWidth()/2 - bimage.getWidth()/2;
+		int bY = this.y + image.getHeight()/2 - bimage.getHeight()/2;
+		
+		Dir[] dirs = Dir.values();
+		for(Dir dir : dirs) {
+			tf.gf.createBullet(bX, bY, dir, group, tf);
+		}
+		
+		if(group == Group.my) new Thread(()->new Audio("audio/tank_fire.wav").play()).start();
     }
     public void die() {
         this.alive = false;

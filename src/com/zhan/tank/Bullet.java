@@ -66,7 +66,7 @@ public class Bullet extends BaseBullet{
         if (rect.intersects(tank.getrect())) {
             tank.die();
             this.die();
-            int ex = tank.getX() + tank.getImage().getWidth()/2 - Explode.width/2;
+            int ex = tank.getX() + tank.getImage().getWidth()/2 - Explode.width;
             int ey = tank.getY() + tank.getImage().getHeight()/2 - Explode.height/2;
             tf.explodes.add(tf.gf.createExplode(ex, ey, tf));
         }

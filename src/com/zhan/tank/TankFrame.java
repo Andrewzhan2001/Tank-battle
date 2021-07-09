@@ -18,6 +18,7 @@ import com.zhan.tank.abstractfactory.BaseTank;
 import com.zhan.tank.abstractfactory.DefaultFactory;
 import com.zhan.tank.abstractfactory.GameFactory;
 import com.zhan.tank.abstractfactory.RectFactory;
+import com.zhan.tank.abstractfactory.DefaultFactory;
 
 
 public class TankFrame extends Frame {

@@ -12,10 +12,8 @@ import com.zhan.tank.TankFrame;
 
 public class RectBullet extends BaseBullet {
 	private static final int SPEED = 6;
-	public static int WIDTH = ResourceCtrl.bulletD.getWidth();
-	public static int HEIGHT = ResourceCtrl.bulletD.getHeight();
-	
-	Rectangle rect = new Rectangle();
+	public static int WIDTH = 20;
+	public static int HEIGHT = 20;
 	
 	private int x, y;
 	private Dir dir;
@@ -31,15 +29,10 @@ public class RectBullet extends BaseBullet {
 		this.group = group;
 		this.tf = tf;
 		
-		rect.x = this.x;
-		rect.y = this.y;
-		rect.width = WIDTH;
-		rect.height = HEIGHT;
-		
 		tf.bullets.add(this);
 				
 	}
-	
+	Rectangle rect = new Rectangle(x,y,WIDTH,HEIGHT);
 	public Group getGroup() {
 		return group;
 	}
@@ -88,14 +81,15 @@ public class RectBullet extends BaseBullet {
 		
 	}
 
+	@Override
 	public void collideWith(BaseTank tank) {
 		if(this.group == tank.getGroup()) return;
 		
-		if(rect.intersects(tank.rect)) {
+		if(rect.intersects(tank.getrect())) {
 			tank.die();
 			this.die();
-			int eX = tank.getX() + tank.getImage().getWidth()/2 - Explode.width;
-			int eY = tank.getY() + tank.getImage().getHeight()/2 - Explode.height/2;
+			int eX = tank.getX();
+			int eY = tank.getY();
 			tf.explodes.add(tf.gf.createExplode(eX, eY, tf));
 		}
 		

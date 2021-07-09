@@ -8,7 +8,6 @@ import com.zhan.tank.Group;
 
 public abstract class BaseTank {
 	public Group group = Group.Enemy;
-	public Rectangle rect = new Rectangle();
 	
 	public abstract int paint(Graphics g);
 

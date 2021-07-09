@@ -18,11 +18,10 @@ import com.zhan.tank.TankFrame;
 public class RectTank extends BaseTank {
 
 	private static final int SPEED = 2;
-	public static int WIDTH = ResourceCtrl.tankU.getWidth();
+	public static int WIDTH = 40;
 
-	public static int HEIGHT = ResourceCtrl.tankU.getHeight();
+	public static int HEIGHT = 40;
 
-	public Rectangle rect = new Rectangle();
 
 	private Random random = new Random();
 
@@ -45,11 +44,6 @@ public class RectTank extends BaseTank {
 		this.group = group;
 		this.tf = tf;
 
-		rect.x = this.x;
-		rect.y = this.y;
-		rect.width = WIDTH;
-		rect.height = HEIGHT;
-
 		if (group == Group.my) {
 			String goodFSName = (String) PropertyMgr.get("goodFS");
 
@@ -63,6 +57,7 @@ public class RectTank extends BaseTank {
 			fs = new DefaultFireStrategy();
 		}
 	}
+	public Rectangle rect = new Rectangle(x,y,WIDTH,HEIGHT);
 
 	public void fire() {
 		// fs.fire(this);
