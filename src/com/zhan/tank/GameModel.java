@@ -5,7 +5,7 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameModel {
+public class GameModel {//这里储存了所有的实体
   Tank mytank = new Tank(200, 200, Dir.up, Group.my, this);
   List<Bullet> bullets = new ArrayList<>();//容器里面不清掉就有内存泄漏
   List<Tank> enemys = new ArrayList<>();

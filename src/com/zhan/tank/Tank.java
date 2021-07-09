@@ -69,7 +69,7 @@ public class Tank {
         this.moving = moving;
     }
     private Rectangle rect = new Rectangle(x,y,image.getWidth(), image.getHeight());
-    GameModel gm = new GameModel();
+    GameModel gm = null;
     public Tank(int x, int y, Dir dir, Group group, GameModel gm) {
         this.x = x;
         this.y = y;
