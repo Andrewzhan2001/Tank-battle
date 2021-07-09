@@ -9,7 +9,7 @@ public class Bullet {
     private int x,y;
     private Dir dir;
     private boolean alive = true;
-    private TankFrame tf = null;
+    private GameModel gm = null;
     private Group group = Group.Enemy;
     public Group getGroup() {
         return group;
@@ -24,13 +24,13 @@ public class Bullet {
     public void setImage(BufferedImage image) {
         this.image = image;
     }
-    public Bullet(int x, int y, Dir dir, Group group, TankFrame tf) {
+    public Bullet(int x, int y, Dir dir, Group group, GameModel gm) {
         this.x = x;
         this.y = y;
         this.dir = dir;
         this.group = group;
-        this.tf = tf;
-        tf.bullets.add(this);
+        this.gm = gm;
+        gm.bullets.add(this);
     }
     private Rectangle rect = new Rectangle(this.x, this.y, image.getWidth(),image.getHeight());
     private void move() {
@@ -64,7 +64,7 @@ public class Bullet {
             this.die();
             int ex = tank.getX() + tank.getImage().getWidth()/2 - Explode.width/2;
             int ey = tank.getY() + tank.getImage().getHeight()/2 - Explode.height/2;
-            tf.explodes.add(new Explode(ex,ey,tf));
+            gm.explodes.add(new Explode(ex,ey,gm));
         }
     }
     private void die() {
@@ -72,7 +72,7 @@ public class Bullet {
     }
     public int paint(Graphics g) {
         if (!alive) {
-            tf.bullets.remove(this);
+            gm.bullets.remove(this);
             return 1;//not alive return 1
         }
         switch (dir) {

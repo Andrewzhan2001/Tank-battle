@@ -69,12 +69,13 @@ public class Tank {
         this.moving = moving;
     }
     private Rectangle rect = new Rectangle(x,y,image.getWidth(), image.getHeight());
-    public Tank(int x, int y, Dir dir, Group group, TankFrame tf) {
+    GameModel gm = new GameModel();
+    public Tank(int x, int y, Dir dir, Group group, GameModel gm) {
         this.x = x;
         this.y = y;
         this.dir = dir;
         this.setGroup(group);
-        this.tf = tf;
+        this.gm = gm;
         if (group == Group.my){
             String goodFSName = PropertyMgr.getString("goodFS");
             try {//全路径名，把string名字的文件load到内存
@@ -131,7 +132,7 @@ public class Tank {
     }
     public int paint(Graphics g) {
         if (!alive) {
-            tf.enemys.remove(this);
+            gm.enemys.remove(this);
             return 1;//not alive return 1
         }
         switch (dir) {

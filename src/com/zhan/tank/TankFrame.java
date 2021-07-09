@@ -12,13 +12,12 @@ import java.util.ArrayList;
 //import java.util.Iterator;
 import java.util.List;
 
-
+//MVC view输入通过control来控制model，反过来也是
 public class TankFrame extends Frame {
     static final int sc_width = PropertyMgr.getInt("scwidth"), sc_height = PropertyMgr.getInt("scheight");
-    Tank mytank = new Tank(200, 200, Dir.up, Group.my, this);
-    List<Bullet> bullets = new ArrayList<>();//容器里面不清掉就有内存泄漏
-    List<Tank> enemys = new ArrayList<>();
-    List<Explode> explodes = new ArrayList<>();
+
+    GameModel gm = new GameModel();//现在把gamemodel画出来，至于内部怎么样的没关系
+   
     public TankFrame() {
         setSize(sc_width, sc_height);
         setResizable(false);
@@ -49,37 +48,8 @@ public class TankFrame extends Frame {
 
     @Override
     public void paint(Graphics g) {
-        Color c = g.getColor();
-        g.setColor(Color.RED);
-        g.drawString("Bullet number:"+bullets.size(), 10, 60);
-        g.drawString("Enemy number:"+enemys.size(), 10, 80);
-        g.drawString("explode number:"+explodes.size(), 10, 100);
-        g.setColor(c);
-        for (int i = 0; i < bullets.size(); i++) {//直接遍历的时候不允许增改减（fail-fast)，只针对原集合（用concurrent里面他会拷贝进行遍历,在最后再放回去）
-            int check = bullets.get(i).paint(g);
-            if (check == 1) i--;
-        }
-        /* for (Iterator<Bullet> t = bullets.iterator(); t.hasNext();) {
-            Bullet b = t.next();第一次调用会返回iterator的第一个元素
-            if(!b.live) it.remove();
-        } */
-
-        for (int i = 0; i < enemys.size(); i++) {//tank paint
-            int check = enemys.get(i).paint(g);
-            if (check == 1) i--;
-        }
-
-        for (int i = 0; i < explodes.size(); i++) {//explode paint
-            explodes.get(i).paint(g);
-        }
-
-        for (int i = 0; i < bullets.size(); i++) {//collision
-            for (int j = 0; j < enemys.size(); j++) {
-                bullets.get(i).collideWith(enemys.get(j));
-            }
-        }
-
-        mytank.paint(g);
+        gm.paint(g);
+        
     }
 
     class MyKeyListener extends KeyAdapter {
@@ -104,7 +74,7 @@ public class TankFrame extends Frame {
                     down = true;
                     break;
                 case KeyEvent.VK_J:
-                    mytank.fire();
+                    gm.getMainTank().fire();
                     break;
             }
             setTankDir();
@@ -130,13 +100,13 @@ public class TankFrame extends Frame {
             setTankDir();
         }
         private void setTankDir() {
-            if(!left && !right && !up && !down) mytank.setMoving(false); 
+            if(!left && !right && !up && !down) gm.getMainTank().setMoving(false); 
             else {
-                mytank.setMoving(true);
-                if (left) mytank.setDir(Dir.left);
-                if (right) mytank.setDir(Dir.right);
-                if (up) mytank.setDir(Dir.up);
-                if (down) mytank.setDir(Dir.down);
+                gm.getMainTank().setMoving(true);
+                if (left) gm.getMainTank().setDir(Dir.left);
+                if (right) gm.getMainTank().setDir(Dir.right);
+                if (up) gm.getMainTank().setDir(Dir.up);
+                if (down) gm.getMainTank().setDir(Dir.down);
             } 
         }
     }
