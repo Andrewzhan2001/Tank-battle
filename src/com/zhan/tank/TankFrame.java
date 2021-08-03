@@ -16,8 +16,6 @@ import java.util.List;
 public class TankFrame extends Frame {
     static final int sc_width = PropertyMgr.getInt("scwidth"), sc_height = PropertyMgr.getInt("scheight");
 
-    GameModel gm = new GameModel();//现在把gamemodel画出来，至于内部怎么样的没关系
-   
     public TankFrame() {
         setSize(sc_width, sc_height);
         setResizable(false);
@@ -48,7 +46,7 @@ public class TankFrame extends Frame {
 
     @Override
     public void paint(Graphics g) {
-        gm.paint(g);
+        GameModel.getInstance().paint(g);
         
     }
 
@@ -74,7 +72,7 @@ public class TankFrame extends Frame {
                     down = true;
                     break;
                 case KeyEvent.VK_J:
-                    gm.getMainTank().fire();
+                    GameModel.getInstance().getMainTank().fire();
                     break;
             }
             setTankDir();
@@ -100,13 +98,13 @@ public class TankFrame extends Frame {
             setTankDir();
         }
         private void setTankDir() {
-            if(!left && !right && !up && !down) gm.getMainTank().setMoving(false); 
+            if(!left && !right && !up && !down) GameModel.getInstance().getMainTank().setMoving(false); 
             else {
-                gm.getMainTank().setMoving(true);
-                if (left) gm.getMainTank().setDir(Dir.left);
-                if (right) gm.getMainTank().setDir(Dir.right);
-                if (up) gm.getMainTank().setDir(Dir.up);
-                if (down) gm.getMainTank().setDir(Dir.down);
+                GameModel.getInstance().getMainTank().setMoving(true);
+                if (left) GameModel.getInstance().getMainTank().setDir(Dir.left);
+                if (right) GameModel.getInstance().getMainTank().setDir(Dir.right);
+                if (up) GameModel.getInstance().getMainTank().setDir(Dir.up);
+                if (down) GameModel.getInstance().getMainTank().setDir(Dir.down);
             } 
         }
     }

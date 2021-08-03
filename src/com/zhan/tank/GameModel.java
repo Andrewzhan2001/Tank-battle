@@ -5,22 +5,32 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.zhan.tank.chainofresponsibility.BulletTankCollider;
-import com.zhan.tank.chainofresponsibility.Collider;
 import com.zhan.tank.chainofresponsibility.ColliderChain;
 
+
 public class GameModel {//这里储存了所有的实体
-  Tank mytank = new Tank(200, 200, Dir.up, Group.my, this);
+
+  private static final GameModel INSTANCE = new GameModel();
+	static{
+    INSTANCE.init();
+  }
+  Tank mytank;
  /*  List<Bullet> bullets = new ArrayList<>();//容器里面不清掉就有内存泄漏;
   List<Tank> enemys = new ArrayList<>();
   List<Explode> explodes = new ArrayList<>(); */
   ColliderChain chain = new ColliderChain();
   private List<GameObject> objects = new ArrayList<>();
-  public GameModel() {
+
+  public static GameModel getInstance() {
+		return INSTANCE;
+	}
+
+  public void init() {
+    mytank = new Tank(200, 200, Dir.up, Group.my);
     int initTankCount = PropertyMgr.getInt("initTankCount");
     //初始化敌方坦克
     for (int i = 0; i < initTankCount; i++) {
-      add(new Tank(50+i*80, 200, Dir.down,Group.Enemy,this));
+      new Tank(50+i*80, 200, Dir.down,Group.Enemy);
     }
     
     //初始化墙

@@ -9,16 +9,16 @@ public class Explode extends GameObject{
     private int step = 0;
     GameModel gm = null;
 
-    public Explode(int x, int y, GameModel gm) {
+    public Explode(int x, int y) {
         this.x = x;
         this.y = y;
-        this.gm = gm;
         new Thread(()->new Audio("audio/explode.wav").play()).start();//new的时候播放音乐
+        GameModel.getInstance().add(this);
     }
     public int paint(Graphics g) {
         g.drawImage(ResourceCtrl.explodes[step++], x, y, null);
         if(step >= ResourceCtrl.explodes.length) {
-            gm.remove(this);
+            GameModel.getInstance().remove(this);
             return 1;
         };
         return 0;

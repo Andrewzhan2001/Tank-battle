@@ -78,13 +78,11 @@ public class Tank extends GameObject{
         this.moving = moving;
     }
     private Rectangle rect = new Rectangle(x,y,image.getWidth(), image.getHeight());
-    public GameModel gm = null;
-    public Tank(int x, int y, Dir dir, Group group, GameModel gm) {
+    public Tank(int x, int y, Dir dir, Group group) {
         this.x = x;
         this.y = y;
         this.dir = dir;
         this.setGroup(group);
-        this.gm = gm;
         if (group == Group.my){
             String goodFSName = PropertyMgr.getString("goodFS");
             try {//全路径名，把string名字的文件load到内存
@@ -100,7 +98,7 @@ public class Tank extends GameObject{
                 e.printStackTrace();
             }
         } 
-        
+        GameModel.getInstance().add(this);
     }
     private void move() {
         oldx = x;
@@ -143,7 +141,7 @@ public class Tank extends GameObject{
     }
     public int paint(Graphics g) {
         if (!alive) {
-            gm.remove(this);
+            GameModel.getInstance().remove(this);
             return 1;//not alive return 1
         }
         switch (dir) {

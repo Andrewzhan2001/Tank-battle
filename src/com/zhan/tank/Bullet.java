@@ -9,7 +9,6 @@ public class Bullet extends GameObject{
     private int x,y;
     private Dir dir;
     private boolean alive = true;
-    private GameModel gm = null;
     private Group group = Group.Enemy;
     public Group getGroup() {
         return group;
@@ -24,13 +23,12 @@ public class Bullet extends GameObject{
     public void setImage(BufferedImage image) {
         this.image = image;
     }
-    public Bullet(int x, int y, Dir dir, Group group, GameModel gm) {
+    public Bullet(int x, int y, Dir dir, Group group) {
         this.x = x;
         this.y = y;
         this.dir = dir;
         this.group = group;
-        this.gm = gm;
-        gm.add(this);
+        GameModel.getInstance().add(this);
     }
     public Rectangle rect = new Rectangle(this.x, this.y, image.getWidth(),image.getHeight());
     private void move() {
@@ -63,7 +61,7 @@ public class Bullet extends GameObject{
     }
     public int paint(Graphics g) {
         if (!alive) {
-            gm.remove(this);
+            GameModel.getInstance().remove(this);
             return 1;//not alive return 1
         }
         switch (dir) {

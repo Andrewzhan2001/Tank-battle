@@ -10,5 +10,6 @@ public enum Mgr07 {
                 // 这样后面的大括号里直就直接写这个方法的实现
         ()->{System.out.println(Mgr07.Instance.hashCode());}).start();// 同一个类的同一个对象hashcode不同
     }
+    Mgr07.Instance.m();
   }
 }

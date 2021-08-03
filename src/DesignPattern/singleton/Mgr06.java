@@ -3,7 +3,7 @@ package DesignPattern.singleton;
 //有多线程的风险，还没有执行到new的时候另外一个线程开始检测就会出现多个instance
 public class Mgr06 {
   private Mgr06(){};
-  private static class Mgr06Holder {//之家在mgr06，holder不会初始化
+  private static class Mgr06Holder {//只加载mgr06，holder不会初始化
     private final static Mgr06 Instance = new Mgr06();
   }
   public static Mgr06 getInstance() {
