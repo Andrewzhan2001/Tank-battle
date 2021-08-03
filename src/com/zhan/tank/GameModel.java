@@ -5,22 +5,31 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.zhan.tank.chainofresponsibility.BulletTankCollider;
+import com.zhan.tank.chainofresponsibility.Collider;
+import com.zhan.tank.chainofresponsibility.ColliderChain;
+
 public class GameModel {//这里储存了所有的实体
   Tank mytank = new Tank(200, 200, Dir.up, Group.my, this);
-  List<Bullet> bullets = new ArrayList<>();//容器里面不清掉就有内存泄漏
+ /*  List<Bullet> bullets = new ArrayList<>();//容器里面不清掉就有内存泄漏;
   List<Tank> enemys = new ArrayList<>();
-  List<Explode> explodes = new ArrayList<>();
+  List<Explode> explodes = new ArrayList<>(); */
+  ColliderChain chain = new ColliderChain();
+  private List<GameObject> objects = new ArrayList<>();
   public GameModel() {
     int initTankCount = PropertyMgr.getInt("initTankCount");
     //初始化敌方坦克
     for (int i = 0; i < initTankCount; i++) {
-      enemys.add(new Tank(50+i*80, 200, Dir.down,Group.Enemy,this));
+      add(new Tank(50+i*80, 200, Dir.down,Group.Enemy,this));
     }
   }
 
+  public void add(GameObject go) {
+    objects.add(go);
+  }
   public void paint(Graphics g) {
-    Color c = g.getColor();
-    g.setColor(Color.RED);
+/*  Color c = g.getColor();
+     g.setColor(Color.RED);
     g.drawString("Bullet number:"+bullets.size(), 10, 60);
     g.drawString("Enemy number:"+enemys.size(), 10, 80);
     g.drawString("explode number:"+explodes.size(), 10, 100);
@@ -28,18 +37,18 @@ public class GameModel {//这里储存了所有的实体
     for (int i = 0; i < bullets.size(); i++) {//直接遍历的时候不允许增改减（fail-fast)，只针对原集合（用concurrent里面他会拷贝进行遍历,在最后再放回去）
         int check = bullets.get(i).paint(g);
         if (check == 1) i--;
-    }
+    } */
     /* for (Iterator<Bullet> t = bullets.iterator(); t.hasNext();) {
         Bullet b = t.next();第一次调用会返回iterator的第一个元素
         if(!b.live) it.remove();
     } */
 
-    for (int i = 0; i < enemys.size(); i++) {//tank paint
-        int check = enemys.get(i).paint(g);
+    for (int i = 0; i < objects.size(); i++) {//tank paint
+        int check = objects.get(i).paint(g);
         if (check == 1) i--;
     }
 
-    for (int i = 0; i < explodes.size(); i++) {//explode paint
+    /* for (int i = 0; i < explodes.size(); i++) {//explode paint
         explodes.get(i).paint(g);
     }
 
@@ -47,8 +56,14 @@ public class GameModel {//这里储存了所有的实体
         for (int j = 0; j < enemys.size(); j++) {
             bullets.get(i).collideWith(enemys.get(j));
         }
+    } */
+    for (int i = 0; i < objects.size(); i++) {
+      for (int j = i+1; j < objects.size(); j++) {
+        GameObject o1 = objects.get(i);
+        GameObject o2 = objects.get(j);
+        chain.collide(o1, o2);
+      }
     }
-
     mytank.paint(g);
   }
 
@@ -56,4 +71,7 @@ public class GameModel {//这里储存了所有的实体
 		return mytank;
 	}
   
+  public void remove(GameObject go) {
+    objects.remove(go);
+  }
 }

@@ -1,4 +1,10 @@
-package com.zhan.tank;
+package com.zhan.tank.firestrategy;
+
+import com.zhan.tank.Audio;
+import com.zhan.tank.Bullet;
+import com.zhan.tank.Dir;
+import com.zhan.tank.Group;
+import com.zhan.tank.Tank;
 
 public class FourDirFireStrategy implements FireStrategy{
   @Override

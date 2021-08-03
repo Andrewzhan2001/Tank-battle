@@ -10,5 +10,5 @@ scwidth=1080
 scheight=960
 
 #fireStrategy
-goodFS=com.zhan.tank.FourDirFireStrategy
-badFS=com.zhan.tank.DefaultFireStrategy
+goodFS=com.zhan.tank.firestrategy.FourDirFireStrategy
+badFS=com.zhan.tank.firestrategy.DefaultFireStrategy

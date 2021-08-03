@@ -2,7 +2,7 @@ package com.zhan.tank;
 
 import java.awt.Graphics;
 
-public class Explode {
+public class Explode extends GameObject{
     public static int width = ResourceCtrl.explodes[0].getWidth();
     public static int height = ResourceCtrl.explodes[0].getHeight();
     private int x, y;
@@ -15,10 +15,12 @@ public class Explode {
         this.gm = gm;
         new Thread(()->new Audio("audio/explode.wav").play()).start();//new的时候播放音乐
     }
-    public void paint(Graphics g) {
+    public int paint(Graphics g) {
         g.drawImage(ResourceCtrl.explodes[step++], x, y, null);
         if(step >= ResourceCtrl.explodes.length) {
-            gm.explodes.remove(this);
+            gm.remove(this);
+            return 1;
         };
+        return 0;
     }
 }

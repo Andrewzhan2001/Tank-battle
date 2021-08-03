@@ -4,7 +4,7 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
-public class Bullet {
+public class Bullet extends GameObject{
     private static final int speed = PropertyMgr.getInt("bspeed");
     private int x,y;
     private Dir dir;
@@ -30,7 +30,7 @@ public class Bullet {
         this.dir = dir;
         this.group = group;
         this.gm = gm;
-        gm.bullets.add(this);
+        gm.add(this);
     }
     private Rectangle rect = new Rectangle(this.x, this.y, image.getWidth(),image.getHeight());
     private void move() {
@@ -57,22 +57,24 @@ public class Bullet {
         rect.width = image.getWidth();
         rect.height = image.getHeight();
     }
-    public void collideWith(Tank tank) {
-        if (this.group == tank.getGroup()) return;
+    public boolean collideWith(Tank tank) {
+        if (this.group == tank.getGroup()) return false;
         if (rect.intersects(tank.getrect())) {
             tank.die();
             this.die();
             int ex = tank.getX() + tank.getImage().getWidth()/2 - Explode.width/2;
             int ey = tank.getY() + tank.getImage().getHeight()/2 - Explode.height/2;
-            gm.explodes.add(new Explode(ex,ey,gm));
+            gm.add(new Explode(ex,ey,gm));
+            return true;
         }
+        return false;
     }
     private void die() {
         this.alive = false;
     }
     public int paint(Graphics g) {
         if (!alive) {
-            gm.bullets.remove(this);
+            gm.remove(this);
             return 1;//not alive return 1
         }
         switch (dir) {

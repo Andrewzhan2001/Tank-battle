@@ -6,9 +6,14 @@ import java.awt.image.BufferedImage;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Random;
 
+import com.zhan.tank.firestrategy.FireStrategy;
+import com.zhan.tank.firestrategy.FourDirFireStrategy;
+import com.zhan.tank.firestrategy.DefaultFireStrategy;
 
-public class Tank {
+
+public class Tank extends GameObject{
     private int x, y;
+    private int oldx, oldy;
     public int getX() {
         return x;
     }
@@ -33,6 +38,10 @@ public class Tank {
     public void setY(int y) {
         this.y = y;
     }
+    public void back(){
+        x = oldx;
+        y = oldy;
+    }
     private Dir dir = Dir.up;
     private boolean moving = true;
     private boolean alive = true;
@@ -48,7 +57,7 @@ public class Tank {
     public void setImage(BufferedImage image) {
         this.image = image;
     }
-    BufferedImage bimage = ResourceCtrl.bulletU;
+    public BufferedImage bimage = ResourceCtrl.bulletU;
     private TankFrame tf;
     public TankFrame getTf() {
         return tf;
@@ -69,7 +78,7 @@ public class Tank {
         this.moving = moving;
     }
     private Rectangle rect = new Rectangle(x,y,image.getWidth(), image.getHeight());
-    GameModel gm = null;
+    public GameModel gm = null;
     public Tank(int x, int y, Dir dir, Group group, GameModel gm) {
         this.x = x;
         this.y = y;
@@ -94,6 +103,8 @@ public class Tank {
         
     }
     private void move() {
+        oldx = x;
+        oldy = y;
         if (!moving) return;
         switch (dir) {
             case left://switch 直接能enum里面的参数
@@ -132,7 +143,7 @@ public class Tank {
     }
     public int paint(Graphics g) {
         if (!alive) {
-            gm.enemys.remove(this);
+            gm.remove(this);
             return 1;//not alive return 1
         }
         switch (dir) {
@@ -160,6 +171,9 @@ public class Tank {
     public void fire() {
         fs.fire(this);
     }
+    public void stop() {
+		moving = false;
+	}
     public void die() {
         this.alive = false;
     }
