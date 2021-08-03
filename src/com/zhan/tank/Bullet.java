@@ -32,7 +32,7 @@ public class Bullet extends GameObject{
         this.gm = gm;
         gm.add(this);
     }
-    private Rectangle rect = new Rectangle(this.x, this.y, image.getWidth(),image.getHeight());
+    public Rectangle rect = new Rectangle(this.x, this.y, image.getWidth(),image.getHeight());
     private void move() {
         switch (dir) {
             case left:
@@ -57,19 +57,8 @@ public class Bullet extends GameObject{
         rect.width = image.getWidth();
         rect.height = image.getHeight();
     }
-    public boolean collideWith(Tank tank) {
-        if (this.group == tank.getGroup()) return false;
-        if (rect.intersects(tank.getrect())) {
-            tank.die();
-            this.die();
-            int ex = tank.getX() + tank.getImage().getWidth()/2 - Explode.width/2;
-            int ey = tank.getY() + tank.getImage().getHeight()/2 - Explode.height/2;
-            gm.add(new Explode(ex,ey,gm));
-            return true;
-        }
-        return false;
-    }
-    private void die() {
+
+    public void die() {
         this.alive = false;
     }
     public int paint(Graphics g) {
