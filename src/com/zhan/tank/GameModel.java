@@ -44,6 +44,7 @@ public class GameModel {//这里储存了所有的实体
     objects.add(go);
   }
   public void paint(Graphics g) {
+    System.out.println(objects.size());
 /*  Color c = g.getColor();
      g.setColor(Color.RED);
     g.drawString("Bullet number:"+bullets.size(), 10, 60);

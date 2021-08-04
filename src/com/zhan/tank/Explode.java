@@ -5,7 +5,6 @@ import java.awt.Graphics;
 public class Explode extends GameObject{
     public static int width = ResourceCtrl.explodes[0].getWidth();
     public static int height = ResourceCtrl.explodes[0].getHeight();
-    private int x, y;
     private int step = 0;
     GameModel gm = null;
 
@@ -22,5 +21,13 @@ public class Explode extends GameObject{
             return 1;
         };
         return 0;
+    }
+    @Override
+    public int getWidth() {
+        return width;
+    }
+    @Override
+    public int getHeight() {
+        return height;
     }
 }

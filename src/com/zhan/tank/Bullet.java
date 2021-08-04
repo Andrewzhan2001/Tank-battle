@@ -6,7 +6,6 @@ import java.awt.image.BufferedImage;
 
 public class Bullet extends GameObject{
     private static final int speed = PropertyMgr.getInt("bspeed");
-    private int x,y;
     private Dir dir;
     private boolean alive = true;
     private Group group = Group.Enemy;
@@ -81,5 +80,13 @@ public class Bullet extends GameObject{
         g.drawImage(image, x, y, null);
         move();
         return 0;//succeed return 0
+    }
+    @Override
+    public int getWidth() {
+        return image.getWidth();
+    }
+    @Override
+    public int getHeight() {
+        return image.getHeight();
     }
 }

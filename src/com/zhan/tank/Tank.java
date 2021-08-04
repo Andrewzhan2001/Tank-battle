@@ -12,7 +12,6 @@ import com.zhan.tank.firestrategy.DefaultFireStrategy;
 
 
 public class Tank extends GameObject{
-    private int x, y;
     private int oldx, oldy;
     public int getX() {
         return x;
@@ -174,5 +173,13 @@ public class Tank extends GameObject{
 	}
     public void die() {
         this.alive = false;
+    }
+    @Override
+    public int getWidth() {
+        return image.getWidth();
+    }
+    @Override
+    public int getHeight() {
+        return image.getHeight();
     }
 }
