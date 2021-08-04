@@ -3,6 +3,7 @@ package com.zhan.tank.decorator;
 import java.awt.Color;
 import java.awt.Graphics;
 
+import com.zhan.tank.GameModel;
 import com.zhan.tank.GameObject;
 
 public class RectDecorator extends GODecorator {
@@ -16,11 +17,17 @@ public class RectDecorator extends GODecorator {
 		this.x = go.x;
 		this.y = go.y;
 		int check = go.paint(g);
+		if (check == 0) {
 			Color c = g.getColor();
 			g.setColor(Color.yellow);
 			g.drawRect(go.x, go.y, go.getHeight(), go.getWidth());
 			g.setColor(c);
 			return check;
+		} else {
+			GameModel.getInstance().remove(this);
+			return 1;
+		}
+			
 		
 	}
 

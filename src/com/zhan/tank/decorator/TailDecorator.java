@@ -3,6 +3,7 @@ package com.zhan.tank.decorator;
 import java.awt.Color;
 import java.awt.Graphics;
 
+import com.zhan.tank.GameModel;
 import com.zhan.tank.GameObject;
 
 public class TailDecorator extends GODecorator {
@@ -16,13 +17,18 @@ public class TailDecorator extends GODecorator {
 	public int paint(Graphics g) {
 		this.x = go.x;
 		this.y = go.y;
-		go.paint(g);
+		int check = go.paint(g);
+		if (check == 0) {
+			Color c = g.getColor();
+			g.setColor(Color.WHITE);
+			g.drawLine(go.x, go.y, go.x + getWidth(), go.y + getHeight());
+			g.setColor(c);
+			return 0;
+		} else {
+			GameModel.getInstance().remove(this);
+			return 1;
+		}
 		
-		Color c = g.getColor();
-		g.setColor(Color.WHITE);
-		g.drawLine(go.x, go.y, go.x + getWidth(), go.y + getHeight());
-		g.setColor(c);
-		return 0;
 	}
 	
 	
