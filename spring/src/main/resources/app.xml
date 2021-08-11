@@ -5,9 +5,30 @@
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <!-- bean definitions here -->
-  <bean id="d" class="com.zhan.Driver"></bean>
-  <bean id="tank" class="com.zhan.Driver">
+  <!-- <bean id="d" class="com.zhan.Driver"></bean> -->
+  <!-- <bean id="tank" class="com.zhan.Tank"> -->
     <!--之后修改strategy-->
-    <property name="driver" ref="d"></property><!--将tank里面找到driver的属性将他设成d的引用（就是driver对象）-->
-  </bean>
+    <!-- <property name="driver" ref="d"></property> --><!--将tank里面找到driver的属性将他设成d的引用（就是driver对象）-->
+  <!-- </bean>  -->
+  <bean id="tank" class="com.zhan.Tank"/> 
+  <bean id="timeProxy" class="com.zhan.TimeProxy"/>
+
+  <aop:config><!-- aop 配置-->
+    <aop:aspect id="time" ref="timeProxy"> <!-- aop 切面，在某一个方法点上加集合-->
+      <!-- 当执行这个方法的时候（定义切点）-->
+      <aop:pointcut id="onmove" expression="execution(void com.zhan.Tank.move())"/><!-- .*就代表下面所有方法，可以是class也可以Tank.*()-->
+      <!-- 在方法执行之前调用上面ref的method“before”-->
+      <aop:before method="before" pointcut-ref="onmove" /><!-- pointcut-ref,用于哪个切点-->
+      <!-- 在方法执行之后调用上面ref的method“before”-->
+      <aop:after method="after" pointcut-ref="onmove"/>
+    </aop:aspect>
+
+  </aop:config>
+
+
+
+
+
+
+
 </beans>
