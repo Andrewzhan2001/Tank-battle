@@ -4,12 +4,16 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 import com.zhan.tank.firestrategy.FireStrategy;
 import com.zhan.tank.firestrategy.FourDirFireStrategy;
 import com.zhan.tank.firestrategy.DefaultFireStrategy;
-
+import com.zhan.tank.observer.TankFireEvent;
+import com.zhan.tank.observer.TankFireHandler;
+import com.zhan.tank.observer.TankFireObserver;
 
 public class Tank extends GameObject{
     private int oldx, oldy;
@@ -182,4 +186,16 @@ public class Tank extends GameObject{
     public int getHeight() {
         return image.getHeight();
     }
+
+    //list of observers
+    private List<TankFireObserver> fireObservers = Arrays.asList(new TankFireHandler());
+	public void handleFireKey() {
+        // event 里面存有tank
+		TankFireEvent event = new TankFireEvent(this);
+		for(TankFireObserver o : fireObservers) {
+            //所有的observer调用actionOnFire
+            //从event里面获取tank的对象
+			o.actionOnFire(event);
+		}
+	}
 }
