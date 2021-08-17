@@ -2,13 +2,22 @@ package com.zhan.tank;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.zhan.tank.chainofresponsibility.ColliderChain;
 
-
-public class GameModel {//这里储存了所有的实体
+// serializable 对象序列化，将对象的字节一模一样写到文件里面
+// 只有当所有class里面的属性全部都实现了serializable接口才能写入文件
+public class GameModel implements Serializable{//这里储存了所有的实体
 
   private static final GameModel INSTANCE = new GameModel();
 	static{
@@ -91,4 +100,56 @@ public class GameModel {//这里储存了所有的实体
   public void remove(GameObject go) {
     objects.remove(go);
   }
+
+  public void save() {
+		File f = new File("c:/zhan/tank.data");
+		ObjectOutputStream oos = null;
+		try {
+      // 导入一个outputstream参数，objectOutputstream将东西写入后面的outputstream
+			oos = new ObjectOutputStream(new FileOutputStream(f));
+			oos.writeObject(mytank);
+			oos.writeObject(objects);//list全都实现了serializable接口
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+
+      // finally 块中定义的代码，总是在 try 和任何 catch 块之后、方法完成之前运行
+      // 正常情况下，不管是否抛出或捕获异常 finally 块都会执行
+		} finally {
+			if(oos != null) {
+				try {
+					oos.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+
+	public void load() {
+		File f = new File("c:/zhan/tank.data");
+    ObjectInputStream ois = null;
+		try {
+			ois = new ObjectInputStream(new FileInputStream(f));
+			mytank = (Tank)ois.readObject();
+			objects = (List)ois.readObject();
+			
+			
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} finally {
+			if(ois != null) {
+				try {
+					ois.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
 }

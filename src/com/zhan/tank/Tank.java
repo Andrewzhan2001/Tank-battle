@@ -188,7 +188,8 @@ public class Tank extends GameObject{
     }
 
     //list of observers
-    private List<TankFireObserver> fireObservers = Arrays.asList(new TankFireHandler());
+    // transient 表示这个属性不需要序列化
+    private transient List<TankFireObserver> fireObservers = Arrays.asList(new TankFireHandler());
 	public void handleFireKey() {
         // event 里面存有tank
 		TankFireEvent event = new TankFireEvent(this);
