@@ -2,7 +2,7 @@
 ## Introduction
 Control you tank and shoot to destory other tank. 
 For testing, your tank is indestructible.  
-Implementing a lot of design patterns to improve readability and extendibility.  
+Implementing a lot of design patterns to improve readability and extensibility.  
 Also including Sring( AOP, IOC etc.) to learn and try to implement this game by using it.
 ## Control
 By pressing `WASD` to control the move of your tank.  
