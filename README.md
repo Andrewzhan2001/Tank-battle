@@ -6,7 +6,8 @@ Implementing a lot of design patterns to improve readability and extendibility.
 Also including Sring( AOP, IOC etc.) to learn and try to implement this game by using it.
 ## Control
 By pressing `WASD` to control the move of your tank.  
-By pressing `J` to shoot bullets.
+By pressing `J` to shoot bullets.  
+No tank can pass through the wall.
 ## Program details
 ![image-1.png](./image-1.png)
 To run the program as the image below, go to the dp_model branch and proceed running (even build failed due to some design pattern learning code in DesignPattern folder outside the program code).  
